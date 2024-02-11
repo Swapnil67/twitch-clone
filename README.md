@@ -32,3 +32,6 @@ Key Features:
   - 🗺️ Grouped routes & layouts
   - 🗃️ MySQL
   - 🚀 Deployment
+
+# MySQL Docker Configuration
+$ docker run --name twitch-mysql -v twitch-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret-pass -d mysql
