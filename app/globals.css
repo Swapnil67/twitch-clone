@@ -81,6 +81,23 @@ body,
     --ring: 212.7 26.8% 83.9%;
   }
 }
+
+
+
+@layer utilities {
+  .app-icon-sm {
+    @apply h-5 w-5;
+  }
+  .app-icon-md {
+    @apply h-7 w-7;
+  }
+  .app-icon-lg {
+    @apply h-5 w-5;
+  }
+  .app-icon-xl {
+    @apply h-12 w-12;
+  }
+}
  
 @layer base {
   * {
