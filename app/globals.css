@@ -85,6 +85,9 @@ body,
 
 
 @layer utilities {
+  .app-icon-xs {
+    @apply h-4 w-4;
+  }
   .app-icon-sm {
     @apply h-5 w-5;
   }
