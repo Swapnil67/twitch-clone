@@ -16,7 +16,7 @@ const Recommended = (props: RecommendedProps) => {
 
   const { collapsed } = useSidebar((state) => state);
 
-  const showLabel = !collapsed && data.length;
+  const showLabel = !collapsed && data.length > 0;
 
   return (
     <div>
