@@ -3,6 +3,28 @@ import { db } from "@/lib/db";
 import console from "console";
 
 /**
+ * Returns the list of users following you
+ * @param id
+ */
+export const getFollowedUsers = async () => {
+  try {
+    const self = await getSelf();
+    const followedUsers = await db.follow.findMany({
+      where: {
+        followerId: self.id,
+      },
+      include: {
+        following: true,
+      },
+    });
+    return followedUsers;
+  } catch (err) {
+    console.log("getFollowedUsers err ", err);
+    return [];
+  }
+};
+
+/**
  * Check if we are following the other user
  * @param id
  * @returns
@@ -80,7 +102,7 @@ export const followUser = async (id: string) => {
 export const unFollowUser = async (id: string) => {
   try {
     const self = await getSelf();
-  
+
     // * Check if user exists
     const otherUser = await db.user.findUnique({
       where: { id },
@@ -88,12 +110,12 @@ export const unFollowUser = async (id: string) => {
     if (!otherUser) {
       throw new Error("User not found");
     }
-  
+
     // * Check if trying to follow self
     if (otherUser.id === self.id) {
       throw new Error("Cannot unfollow yourself");
     }
-  
+
     // * Check if already following
     const existingFollow = await db.follow.findFirst({
       where: {
@@ -101,11 +123,11 @@ export const unFollowUser = async (id: string) => {
         followingId: otherUser.id,
       },
     });
-  
+
     if (!existingFollow) {
       throw new Error("Not following");
     }
-  
+
     // * Unfollow the user [delete the follow row]
     const unfollow = await db.follow.delete({
       where: {
@@ -115,10 +137,10 @@ export const unFollowUser = async (id: string) => {
         following: true,
       },
     });
-  
+
     return unfollow;
   } catch (err) {
     console.log("Error ", err);
-    throw new Error("Internal Server Error")
+    throw new Error("Internal Server Error");
   }
 };
