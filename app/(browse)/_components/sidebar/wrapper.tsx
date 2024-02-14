@@ -4,6 +4,7 @@ import { useSidebar } from "@/store/use-sidebar";
 import { useEffect, useState } from "react";
 import { ToggleSkeleton } from "./toggle";
 import { RecommendedSkeleton } from "./recommended";
+import { FollowingSkeleton } from "./following";
 
 interface WrapperProps {
   children: React.ReactNode;
@@ -29,6 +30,7 @@ export const Wrapper = ({ children }: WrapperProps) => {
         )}
       >
         <ToggleSkeleton />
+        <FollowingSkeleton />
         <RecommendedSkeleton />
       </aside>
     );
