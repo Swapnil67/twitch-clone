@@ -1,5 +1,6 @@
 "use client";
 
+import { onBlock, onUnblock } from "@/actions/block";
 import { onFollow, onUnFollow } from "@/actions/follow";
 import { Button } from "@/components/ui/button";
 import React, { useTransition } from "react";
@@ -41,21 +42,49 @@ const Actions = ({ userId, isFollowing }: ActionsProps) => {
     });
   };
 
+  const handleBlock = () => {
+    startTransition(async () => {
+      const block = await onBlock(userId);
+      const { status } = block;
+      if (status) {
+        toast.success(
+          `Blocked the user ${block.blockedkUser?.blocked.username}`
+        );
+      } else {
+        toast.error(block.msg);
+      }
+    });
+  };
+
+  const handleUnblock = () => {
+    startTransition(async () => {
+      const unblock = await onUnblock(userId);
+      const { status } = unblock;
+      if (status) {
+        toast.success(
+          `Unblocked the user ${unblock.unBlockedkUser?.blocked.username}`
+        );
+      } else {
+        toast.error(unblock.msg);
+      }
+    });
+  };
 
   const onClick = () => {
-    if(isFollowing) {
-      handleUnfollow()
-    }
-    else {
+    if (isFollowing) {
+      handleUnfollow();
+    } else {
       handleFollow();
     }
-  }
+  };
 
   return (
     <>
       <Button disabled={isPending} onClick={onClick} variant="primary">
         {isFollowing ? "Unfollow" : "Follow"}
       </Button>
+      {/* <Button disabled={isPending} onClick={handleBlock}>Block</Button> */}
+      <Button disabled={isPending} onClick={handleUnblock}>Unblock</Button>
     </>
   );
 };
