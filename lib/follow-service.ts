@@ -12,6 +12,13 @@ export const getFollowedUsers = async () => {
     const followedUsers = await db.follow.findMany({
       where: {
         followerId: self.id,
+        following: {
+          blocking: {
+            none: {
+              blockedId: self.id,
+            },
+          },
+        },
       },
       include: {
         following: true,
@@ -100,47 +107,42 @@ export const followUser = async (id: string) => {
 };
 
 export const unFollowUser = async (id: string) => {
-  try {
-    const self = await getSelf();
+  const self = await getSelf();
 
-    // * Check if user exists
-    const otherUser = await db.user.findUnique({
-      where: { id },
-    });
-    if (!otherUser) {
-      throw new Error("User not found");
-    }
-
-    // * Check if trying to follow self
-    if (otherUser.id === self.id) {
-      throw new Error("Cannot unfollow yourself");
-    }
-
-    // * Check if already following
-    const existingFollow = await db.follow.findFirst({
-      where: {
-        followerId: self.id,
-        followingId: otherUser.id,
-      },
-    });
-
-    if (!existingFollow) {
-      throw new Error("Not following");
-    }
-
-    // * Unfollow the user [delete the follow row]
-    const unfollow = await db.follow.delete({
-      where: {
-        id: existingFollow.id,
-      },
-      include: {
-        following: true,
-      },
-    });
-
-    return unfollow;
-  } catch (err) {
-    console.log("Error ", err);
-    throw new Error("Internal Server Error");
+  // * Check if user exists
+  const otherUser = await db.user.findUnique({
+    where: { id },
+  });
+  if (!otherUser) {
+    throw new Error("User not found");
   }
+
+  // * Check if trying to follow self
+  if (otherUser.id === self.id) {
+    throw new Error("Cannot unfollow yourself");
+  }
+
+  // * Check if already following
+  const existingFollow = await db.follow.findFirst({
+    where: {
+      followerId: self.id,
+      followingId: otherUser.id,
+    },
+  });
+
+  if (!existingFollow) {
+    throw new Error("Not following");
+  }
+
+  // * Unfollow the user [delete the follow row]
+  const unfollow = await db.follow.delete({
+    where: {
+      id: existingFollow.id,
+    },
+    include: {
+      following: true,
+    },
+  });
+
+  return unfollow;
 };

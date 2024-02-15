@@ -3,8 +3,6 @@ import { db } from "@/lib/db";
 import { getSelf } from "./auth-service";
 
 export const getRecommended = async () => {
-  // await new Promise((resolve) => setTimeout(resolve, 5000));
-
   let userId;
 
   try {
@@ -29,6 +27,15 @@ export const getRecommended = async () => {
               followedBy: {
                 some: {
                   followerId: userId
+                }
+              }
+            }
+          },
+          {
+            NOT: {
+              blocking: {
+                some: {
+                  blockedId: userId
                 }
               }
             }
