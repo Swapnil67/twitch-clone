@@ -8,6 +8,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
   const { collapsed, onCollapase, onExpand } = useSidebar((state) => state);
   const matches = useMediaQuery("(max-width: 1024px)");
 
+  // * Automatically collapse and expand sidebar based on user device size
   useEffect(() => {
     if (matches) {
       onCollapase();

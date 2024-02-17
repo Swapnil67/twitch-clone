@@ -48,7 +48,11 @@ const UserItem = (props: UserItemProps) => {
             isLive={true}
             showBadge
           />
-          <p>{username}</p>
+          {
+            !collapsed && (
+              <p>{username}</p>
+            )
+          }
         </div>
       </Link>
     </Button>
