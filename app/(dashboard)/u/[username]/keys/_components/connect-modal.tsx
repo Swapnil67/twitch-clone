@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition, useRef, ElementRef } from "react";
 
 import {
   Dialog,
@@ -17,12 +17,36 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 import { AlertTriangle } from "lucide-react";
+import { IngressInput } from "livekit-server-sdk";
+import { createIngress } from "@/actions/ingress";
+import { toast } from "sonner";
+
+const RTMP = String(IngressInput.RTMP_INPUT);
+const WHIP = String(IngressInput.WHIP_INPUT);
+
+type IngressType = typeof RTMP | typeof WHIP;
 
 const ConnectModal = () => {
+  const closeRef = useRef<ElementRef<"button">>(null);
+  const [ingressType, setIngressType] = useState<IngressType>(RTMP);
   const [isClient, setIsClient] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+
+  const onSubmit = () => {
+    startTransition(async () => {
+      const createIngressResp = await createIngress(parseInt(ingressType));
+      if (createIngressResp) {
+        toast.success('Ingress Created');
+        closeRef?.current?.click();
+      } else {
+        toast.error('Something went wrong');
+      }
+    })
+  }
 
   useEffect(() => {
     setIsClient(true);
@@ -31,6 +55,7 @@ const ConnectModal = () => {
   if (!isClient) {
     return null;
   }
+
 
   return (
     <Dialog>
@@ -41,13 +66,16 @@ const ConnectModal = () => {
         <DialogHeader>
           <DialogTitle>Generate Connection</DialogTitle>
         </DialogHeader>
-        <Select>
+        <Select
+          value={ingressType}
+          onValueChange={(value) => setIngressType(value)}
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Ingress Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="RTMP">RTMP</SelectItem>
-            <SelectItem value="WHIP">WHIP</SelectItem>
+            <SelectItem value={RTMP}>RTMP</SelectItem>
+            <SelectItem value={WHIP}>WHIP</SelectItem>
           </SelectContent>
         </Select>
         <Alert>
@@ -59,10 +87,12 @@ const ConnectModal = () => {
           </AlertDescription>
         </Alert>
         <div className="flex justify-between">
-          <DialogClose>
-            <Button variant='ghost'>Cancel</Button>
+          <DialogClose ref={closeRef}>
+            <Button variant="ghost">Cancel</Button>
           </DialogClose>
-          <Button onClick={() => {}} variant='primary'>Generate</Button>
+          <Button disabled={isPending} onClick={onSubmit} variant="primary">
+            Generate
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
