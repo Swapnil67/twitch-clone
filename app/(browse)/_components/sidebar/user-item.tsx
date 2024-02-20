@@ -45,7 +45,7 @@ const UserItem = (props: UserItemProps) => {
           <UserAvatar
             username={username}
             imageUrl={imageUrl}
-            isLive={true}
+            isLive={isLive}
             showBadge
           />
           {
