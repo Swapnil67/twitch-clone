@@ -56,7 +56,6 @@ const ConnectModal = () => {
     return null;
   }
 
-
   return (
     <Dialog>
       <DialogTrigger>
