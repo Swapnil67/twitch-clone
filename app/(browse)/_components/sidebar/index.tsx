@@ -8,8 +8,6 @@ import Following, { FollowingSkeleton } from './following'
 import Toggle, { ToggleSkeleton } from './toggle'
 import Recommended, { RecommendedSkeleton } from './recommended'
 
-
-
 const Sidebar = async () => {
   const recommended = await getRecommended();
   const following = await getFollowedUsers();
