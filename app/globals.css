@@ -92,13 +92,13 @@ body,
     @apply h-5 w-5;
   }
   .app-icon-md {
-    @apply h-7 w-7;
+    @apply h-6 w-6;
   }
   .app-icon-lg {
-    @apply h-5 w-5;
+    @apply h-7 w-7;
   }
   .app-icon-xl {
-    @apply h-12 w-12;
+    @apply h-10 w-10;
   }
 }
  
