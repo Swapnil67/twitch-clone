@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ChatToggle from "./chat-toggle";
 import VariantToggle from "../variant-toggle";
 
-const ChatHeader = () => {
+export const ChatHeader = () => {
   return (
     <div className="relative p-3 border-b">
       {/* TODO Toggle Chat sidebar */}
@@ -27,5 +27,3 @@ export const ChatHeaderSkeleton = () => {
     </div>
   );
 };
-
-export default ChatHeader;

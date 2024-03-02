@@ -15,7 +15,7 @@ interface ChatFormProps {
   isFollowersOnly: boolean;
 }
 
-const ChatForm = (props: ChatFormProps) => {
+export const ChatForm = (props: ChatFormProps) => {
   const {
     value,
     onSubmit,
@@ -85,13 +85,13 @@ const ChatForm = (props: ChatFormProps) => {
 };
 
 export const ChatFormSkeleton = () => {
-  <div className="flex flex-col items-center gap-y-4 p-3">
-    <Skeleton className="w-full h-10" />
-    <div className="flex items-center gap-x-2 ml-auto">
-      <Skeleton className="app-icon-lg" />
-      <Skeleton className="h-7 w-12" />
+  return (
+    <div className="flex flex-col items-center gap-y-4 p-3">
+      <Skeleton className="w-full h-10" />
+      <div className="flex items-center gap-x-2 ml-auto">
+        <Skeleton className="app-icon-lg" />
+        <Skeleton className="h-7 w-12" />
+      </div>
     </div>
-  </div>;
+  );
 };
-
-export default ChatForm;
