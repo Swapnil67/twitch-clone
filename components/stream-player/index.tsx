@@ -8,8 +8,8 @@ import { LiveKitRoom } from "@livekit/components-react";
 import { Video } from "./video";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/lib/utils";
-import Chat from "./chat";
-import ChatToggle from "./chat-toggle";
+import Chat from "./chat/chat";
+import ChatToggle from "./chat/chat-toggle";
 
 interface StreamPlayerProps {
   stream: Stream;

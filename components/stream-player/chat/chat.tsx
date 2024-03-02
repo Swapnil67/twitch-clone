@@ -13,7 +13,7 @@ import ChatHeader from "./chat-header";
 
 import { ChatVariant, useChatSidebar } from "@/store/use-chat-sidebar";
 import ChatForm from "./chat-form";
-
+import ChatList from "./chat-list";
 
 interface ChatProps {
   viewerName: string;
@@ -71,22 +71,21 @@ export const Chat = (props: ChatProps) => {
   return (
     <div className="flex flex-col bg-background border-l border-b pt-0 h-[calc(100vh-80px)]">
       <ChatHeader />
-      { variant === ChatVariant.CHAT && (
-        <ChatForm
-          value={value}
-          onSubmit={onSubmit}
-          onChange={onChange}
-          isHidden={isHidden}
-          isDelayed={isChatDelayed}
-          isFollowing={isFollowing}
-          isFollowersOnly={isChatFollowersOnly}
-        />
-      ) }
-      {
-        variant === ChatVariant.COMMUNITY && (
-          <p>Community</p>
-        )
-      }
+      {variant === ChatVariant.CHAT && (
+        <>
+          <ChatList messages={reverserdMessages} isHidden={isHidden} />
+          <ChatForm
+            value={value}
+            onSubmit={onSubmit}
+            onChange={onChange}
+            isHidden={isHidden}
+            isDelayed={isChatDelayed}
+            isFollowing={isFollowing}
+            isFollowersOnly={isChatFollowersOnly}
+          />
+        </>
+      )}
+      {variant === ChatVariant.COMMUNITY && <p>Community</p>}
     </div>
   );
 };

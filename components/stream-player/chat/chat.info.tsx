@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Hint } from "../hint";
+import { Hint } from "../../hint";
 import { Info } from "lucide-react";
 
 interface ChatInfoProps {
@@ -45,11 +45,11 @@ const ChatInfo = (props: ChatInfoProps) => {
   }
 
   return (
-    <div className="p-2 text-muted-foreground bg-white/5 border border-white/10 w-full rounded-t-md flex items-center gap-x-2">
+    <div className="p-3 text-muted-foreground bg-white/5 border border-white/10 w-full rounded-t-md flex items-center gap-x-2">
       <Hint label={hint}>
         <Info className="app-icon-xs" />
-        <p className="text-xs text-semibold">{label}</p>
       </Hint>
+        <p className="text-xs text-semibold">{label}</p>
     </div>
   );
 };

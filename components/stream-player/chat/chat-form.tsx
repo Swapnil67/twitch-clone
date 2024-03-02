@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
+import { Button } from "../../ui/button";
+import { Skeleton } from "../../ui/skeleton";
 import ChatInfo from "./chat.info";
 
 interface ChatFormProps {
